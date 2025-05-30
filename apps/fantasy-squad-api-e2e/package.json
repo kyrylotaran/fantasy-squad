@@ -1,0 +1,26 @@
+{
+  "name": "@fantasy-squad/fantasy-squad-api-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "implicitDependencies": [
+      "@fantasy-squad/fantasy-squad-api"
+    ],
+    "targets": {
+      "e2e": {
+        "executor": "@nx/jest:jest",
+        "outputs": [
+          "{projectRoot}/test-output/jest/coverage"
+        ],
+        "options": {
+          "jestConfig": "apps/fantasy-squad-api-e2e/jest.config.ts",
+          "passWithNoTests": true
+        },
+        "dependsOn": [
+          "@fantasy-squad/fantasy-squad-api:build",
+          "@fantasy-squad/fantasy-squad-api:serve"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@fantasy-squad/fantasy-squad-web-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "implicitDependencies": [
+      "@fantasy-squad/fantasy-squad-web"
+    ]
+  }
+}

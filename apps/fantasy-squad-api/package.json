@@ -1,0 +1,66 @@
+{
+  "name": "@fantasy-squad/fantasy-squad-api",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "targets": {
+      "build": {
+        "executor": "@nx/esbuild:esbuild",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "defaultConfiguration": "production",
+        "options": {
+          "platform": "node",
+          "outputPath": "apps/fantasy-squad-api/dist",
+          "format": [
+            "cjs"
+          ],
+          "bundle": false,
+          "main": "apps/fantasy-squad-api/src/main.ts",
+          "tsConfig": "apps/fantasy-squad-api/tsconfig.app.json",
+          "assets": [
+            "apps/fantasy-squad-api/src/assets"
+          ],
+          "esbuildOptions": {
+            "sourcemap": true,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        },
+        "configurations": {
+          "development": {},
+          "production": {
+            "esbuildOptions": {
+              "sourcemap": false,
+              "outExtension": {
+                ".js": ".js"
+              }
+            }
+          }
+        }
+      },
+      "serve": {
+        "continuous": true,
+        "executor": "@nx/js:node",
+        "defaultConfiguration": "development",
+        "dependsOn": [
+          "build"
+        ],
+        "options": {
+          "buildTarget": "@fantasy-squad/fantasy-squad-api:build",
+          "runBuildTargetDependencies": false
+        },
+        "configurations": {
+          "development": {
+            "buildTarget": "@fantasy-squad/fantasy-squad-api:build:development"
+          },
+          "production": {
+            "buildTarget": "@fantasy-squad/fantasy-squad-api:build:production"
+          }
+        }
+      }
+    }
+  }
+}

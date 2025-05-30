@@ -1,0 +1,28 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/fantasy-squad-api-e2e"
+    },
+    {
+      "path": "./apps/fantasy-squad-api"
+    },
+    {
+      "path": "./apps/fantasy-squad-web-e2e"
+    },
+    {
+      "path": "./apps/fantasy-squad-web"
+    },
+    {
+      "path": "./libs/fantasy-squad-core"
+    },
+    {
+      "path": "./libs/fantasy-squad-ui"
+    },
+    {
+      "path": "./libs/fantasy-squad-types"
+    }
+  ]
+}
