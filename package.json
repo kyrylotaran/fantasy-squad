@@ -2,7 +2,10 @@
   "name": "@fantasy-squad/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "prepare": "husky",
+    "commit": "commit"
+  },
   "private": true,
   "dependencies": {
     "@fastify/autoload": "~6.0.3",
@@ -17,6 +20,10 @@
   "devDependencies": {
     "@babel/core": "^7.14.5",
     "@babel/preset-react": "^7.14.5",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-nx-scopes": "^19.8.1",
+    "@commitlint/prompt-cli": "^19.8.1",
+    "@commitlint/types": "^19.8.1",
     "@eslint/js": "^9.8.0",
     "@nx/devkit": "21.1.2",
     "@nx/esbuild": "21.1.2",
@@ -50,6 +57,7 @@
     "eslint-plugin-playwright": "^1.6.2",
     "eslint-plugin-react": "7.35.0",
     "eslint-plugin-react-hooks": "5.0.0",
+    "husky": "^9.1.7",
     "jiti": "2.4.2",
     "jsdom": "~22.1.0",
     "jsonc-eslint-parser": "^2.1.0",
