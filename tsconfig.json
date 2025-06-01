@@ -22,7 +22,7 @@
       "path": "./libs/fantasy-squad-ui"
     },
     {
-      "path": "./libs/fantasy-squad-types"
+      "path": "./libs/fantasy-squad-models"
     }
   ]
 }
