@@ -203,6 +203,9 @@ importers:
 
   libs/fantasy-squad-core:
     dependencies:
+      '@fantasy-squad/models':
+        specifier: workspace:*
+        version: link:../fantasy-squad-models
       tslib:
         specifier: ^2.3.0
         version: 2.8.1

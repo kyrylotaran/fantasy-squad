@@ -4,6 +4,9 @@
   "include": [],
   "references": [
     {
+      "path": "../fantasy-squad-models"
+    },
+    {
       "path": "./tsconfig.lib.json"
     },
     {

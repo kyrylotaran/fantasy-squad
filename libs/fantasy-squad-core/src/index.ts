@@ -1,1 +1,2 @@
-export * from './lib/fantasy-squad-core.js';
+export * from './scoring';
+export * from './types';
