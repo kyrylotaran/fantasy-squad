@@ -10,7 +10,8 @@ import { RaceWeekendResult } from '@fantasy-squad/models';
 
 const createMockRaceWeekendResult = (
   qualifyingStandings: Array<{ driverId: string }>,
-  raceStandings: Array<{ driverId: string }>
+  raceStandings: Array<{ driverId: string; isDNF?: boolean }>,
+  fastestLap?: { driverId: string; lapTime: number }
 ): RaceWeekendResult => ({
   id: 'test-id',
   raceId: 'race-id',
@@ -21,7 +22,9 @@ const createMockRaceWeekendResult = (
   raceStandings: raceStandings.map((standing) => ({
     driverId: standing.driverId,
     laps: [90.123, 89.456],
+    isDNF: standing.isDNF ?? false,
   })),
+  fastestLap,
 });
 
 describe('rules', () => {
@@ -170,9 +173,46 @@ describe('rules', () => {
   });
 
   describe('calculateDNFPoints', () => {
-    it('should return 0 (placeholder implementation)', () => {
-      const points = calculateDNFPoints();
+    it('should return DNF points when driver did not finish', () => {
+      const result = createMockRaceWeekendResult(
+        [{ driverId: 'driver-1' }],
+        [{ driverId: 'driver-1', isDNF: true }]
+      );
+
+      const points = calculateDNFPoints({
+        result,
+        driverId: 'driver-1',
+      });
+
+      expect(points).toBe(-20);
+    });
+
+    it('should return 0 when driver finished the race', () => {
+      const result = createMockRaceWeekendResult(
+        [{ driverId: 'driver-1' }],
+        [{ driverId: 'driver-1', isDNF: false }]
+      );
+
+      const points = calculateDNFPoints({
+        result,
+        driverId: 'driver-1',
+      });
+
       expect(points).toBe(0);
+    });
+
+    it('should throw error when driver not found in race standings', () => {
+      const result = createMockRaceWeekendResult(
+        [{ driverId: 'driver-1' }],
+        []
+      );
+
+      expect(() =>
+        calculateDNFPoints({
+          result,
+          driverId: 'driver-1',
+        })
+      ).toThrow('Driver driver-1 not found in race standings');
     });
   });
 
@@ -335,8 +375,47 @@ describe('rules', () => {
   });
 
   describe('calculateFastestLapPoints', () => {
-    it('should return 0 (placeholder implementation)', () => {
-      const points = calculateFastestLapPoints();
+    it('should return fastest lap points when driver has fastest lap', () => {
+      const result = createMockRaceWeekendResult(
+        [{ driverId: 'driver-1' }],
+        [{ driverId: 'driver-1' }],
+        { driverId: 'driver-1', lapTime: 87.123 }
+      );
+
+      const points = calculateFastestLapPoints({
+        result,
+        driverId: 'driver-1',
+      });
+
+      expect(points).toBe(2);
+    });
+
+    it('should return 0 when driver does not have fastest lap', () => {
+      const result = createMockRaceWeekendResult(
+        [{ driverId: 'driver-1' }, { driverId: 'driver-2' }],
+        [{ driverId: 'driver-1' }, { driverId: 'driver-2' }],
+        { driverId: 'driver-2', lapTime: 87.123 }
+      );
+
+      const points = calculateFastestLapPoints({
+        result,
+        driverId: 'driver-1',
+      });
+
+      expect(points).toBe(0);
+    });
+
+    it('should return 0 when no fastest lap is recorded', () => {
+      const result = createMockRaceWeekendResult(
+        [{ driverId: 'driver-1' }],
+        [{ driverId: 'driver-1' }]
+      );
+
+      const points = calculateFastestLapPoints({
+        result,
+        driverId: 'driver-1',
+      });
+
       expect(points).toBe(0);
     });
   });

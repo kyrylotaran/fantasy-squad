@@ -9,6 +9,7 @@ export const QualifyingStandingSchema = z.object({
 export const RaceStandingSchema = z.object({
   driverId: z.uuid(),
   laps: z.array(z.number()).optional(),
+  isDNF: z.boolean(),
 });
 
 export const RaceSchema = z.object({
@@ -23,6 +24,12 @@ export const RaceWeekendResultSchema = z.object({
   raceId: RaceSchema.shape.id,
   qualifyingStandings: z.array(QualifyingStandingSchema),
   raceStandings: z.array(RaceStandingSchema),
+  fastestLap: z
+    .object({
+      driverId: z.uuid(),
+      lapTime: z.number(),
+    })
+    .optional(),
 });
 
 export const DriverSchema = z.object({

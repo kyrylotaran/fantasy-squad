@@ -4,11 +4,10 @@ import {
   LOST_POSITION_POINTS,
   QUALIFYING_POINTS,
   RACE_POINTS,
+  DNF_POINTS,
+  FASTEST_LAP_POINTS,
 } from './points';
 
-/**
- * Calculate points for qualifying position
- */
 export function calculateQualifyingPositionPoints({
   result,
   driverId,
@@ -24,9 +23,6 @@ export function calculateQualifyingPositionPoints({
   return (QUALIFYING_POINTS as PositionPoints)[position] ?? 0;
 }
 
-/**
- * Calculate points for race position
- */
 export function calculateRacePositionPoints({
   result,
   driverId,
@@ -43,9 +39,19 @@ export function calculateRacePositionPoints({
   return (RACE_POINTS as PositionPoints)[position] ?? 0;
 }
 
-export function calculateDNFPoints(): number {
-  // TODO: Implement DNF points calculation logic
-  return 0;
+export function calculateDNFPoints({
+  result,
+  driverId,
+}: ScoringCalculationArgs): number {
+  const driverStanding = result.raceStandings.find(
+    (r) => r.driverId === driverId
+  );
+
+  if (!driverStanding) {
+    throw new Error(`Driver ${driverId} not found in race standings`);
+  }
+
+  return driverStanding.isDNF ? DNF_POINTS : 0;
 }
 
 export function calculateChangedPositionPoints({
@@ -74,7 +80,13 @@ export function calculateChangedPositionPoints({
   return 0;
 }
 
-export function calculateFastestLapPoints(): number {
-  // TODO: Implement fastest lap points calculation logic
-  return 0;
+export function calculateFastestLapPoints({
+  result,
+  driverId,
+}: ScoringCalculationArgs): number {
+  if (!result.fastestLap) {
+    return 0;
+  }
+
+  return result.fastestLap.driverId === driverId ? FASTEST_LAP_POINTS : 0;
 }
