@@ -8,13 +8,13 @@
     ],
     "targets": {
       "e2e": {
-        "executor": "@nx/jest:jest",
+        "executor": "nx:run-commands",
         "outputs": [
-          "{projectRoot}/test-output/jest/coverage"
+          "{projectRoot}/test-output/vitest/coverage"
         ],
         "options": {
-          "jestConfig": "apps/fantasy-squad-api-e2e/jest.config.ts",
-          "passWithNoTests": true
+          "cwd": "apps/fantasy-squad-api-e2e",
+          "command": "pnpm exec vitest run"
         },
         "dependsOn": [
           "@fantasy-squad/fantasy-squad-api:build",

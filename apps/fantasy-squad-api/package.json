@@ -60,6 +60,16 @@
             "buildTarget": "@fantasy-squad/fantasy-squad-api:build:production"
           }
         }
+      },
+      "test": {
+        "executor": "nx:run-commands",
+        "outputs": [
+          "{projectRoot}/coverage"
+        ],
+        "options": {
+          "cwd": "apps/fantasy-squad-api",
+          "command": "pnpm exec vitest run"
+        }
       }
     }
   }

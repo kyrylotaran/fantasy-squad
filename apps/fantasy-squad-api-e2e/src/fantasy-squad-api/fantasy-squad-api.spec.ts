@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { describe, it, expect } from 'vitest';
 
 describe('GET /', () => {
   it('should return a message', async () => {
