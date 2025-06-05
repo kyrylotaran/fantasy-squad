@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 jobs:
-  main:
+  master:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -37,6 +37,8 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
       - uses: nrwl/nx-set-shas@v4
+        with:
+          main-branch-name: 'master'
 
       # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
       - run: pnpm exec nx-cloud record -- pnpm exec nx format:check
